@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+//  Fonction de l'algorithme d’Euclide Étendu
+int euclideEtendu(int a, int b, int *x, int *y) {
+    if (b == 0) {
+        *x = 1;
+        *y = 0;
+        return a; 
+    }
+
+    int x1, y1;
+    int d = euclideEtendu(b, a % b, &x1, &y1);
+
+    *x = y1;
+    *y = x1 - (a / b) * y1;
+
+    return d;
+}
+
+int main()
+{
+    int A, B, C;
+    printf("entrez les nmbrs svp : ");
+    scanf("%d %d", &A, &B);
+
+    while (B == 0) {
+        printf("entrez un nombre different de 0 : ");
+        scanf("%d", &B);
+    }
+
+    int a = A, b = B; // on garde les valeurs originales pour la suite
+
+    while (A % B != 0) { // vérification que B != 0
+        C = A % B;
+        printf("les étapes sont les suivantes : ");
+        printf("%d%%%d=%d\n", A, B, C);
+        A = B;
+        B = C;
+    }
+
+    printf("le pgcd est %d\n", B);
+    if (B == 1)
+        printf("les deux entiers sont premiers entre eux\n");
+
+    // 🔹 3️⃣, 4️⃣, 5️⃣ — Étapes suivantes
+
+    int c;
+    printf("\nEntrer une valeur pour c (pour résoudre ax + by = c) : ");
+    scanf("%d", &c);
+
+    int x0, y0;
+    int d = euclideEtendu(a, b, &x0, &y0);
+
+    printf("\nPGCD(%d, %d) = %d\n", a, b, d);
+
+    // Vérification de l'existence
+    if (c % d != 0) {
+        printf("Pas de solution entiere car %d ne divise pas %d.\n", d, c);
+        return 0;
+    }
+    printf("Il existe des solutions entieres.\n");
+
+    // Solution particulière
+    int xp = x0 * (c / d);
+    int yp = y0 * (c / d);
+    printf("Solution particuliere : (xp, yp) = (%d, %d)\n", xp, yp);
+
+    // Forme générale
+    printf("Forme generale des solutions :\n");
+    printf("x = %d + (%d/%d)*k\n", xp, b, d);
+    printf("y = %d - (%d/%d)*k\n", yp, a, d);
+    printf("avec k ∈ Z\n");
+
+    return 0;
+}
+
