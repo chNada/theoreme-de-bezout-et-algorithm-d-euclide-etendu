@@ -44,8 +44,6 @@ int main()
     if (B == 1)
         printf("les deux entiers sont premiers entre eux\n");
 
-    // 🔹 3️⃣, 4️⃣, 5️⃣ — Étapes suivantes
-
     int c;
     printf("\nEntrer une valeur pour c (pour résoudre ax + by = c) : ");
     scanf("%d", &c);
